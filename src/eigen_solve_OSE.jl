@@ -1,4 +1,4 @@
-function eigen_solve_OSE(U,Upp,Dy2,Dy4,Re_δ,ω)
+function eigen_solve_OSE(U,Upp,Dy1,Dy2,Dy4,Re_δ,ω)
     n = size(Dy1,1)
     Id = I(n)
     Z  = zeros(ComplexF64, n, n)
