@@ -1,0 +1,8 @@
+.vscode/
+
+LocalPreferences.toml    
+*.jl.cov
+*.jl.*.cov
+*.jl.mem 
+desktop.ini
+Thumbs.db
