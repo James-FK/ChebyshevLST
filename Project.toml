@@ -1,3 +1,7 @@
+name = "ChebyshevLST"
+uuid = "f86f5c65-2f2d-4bbf-98ee-4b79aa8e5554"
+version = "0.1.0"
+
 [deps]
 DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
