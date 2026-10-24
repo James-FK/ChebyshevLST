@@ -1,11 +1,11 @@
-function eigen_solve_OSE(U,Upp,Dy1,Dy2,Dy4,Re_δ,ω)
+function eigen_solve_OSE(U,Upp,Dy1,Dy2,Dy4,R,ω)
     n = size(Dy1,1)
     Id = I(n)
     Z  = zeros(ComplexF64, n, n)
-    C3 = im*Re_δ*Diagonal(U)
-    C2 = -(im*ω*Re_δ*Id + 2Dy2)
-    C1 = im*Re_δ*Diagonal(Upp) - im*Re_δ*Diagonal(U)*Dy2
-    C0 = Dy4 + im*Re_δ*ω*Dy2
+    C3 = im*R*Diagonal(U)
+    C2 = -(im*ω*R*Id + 2Dy2)
+    C1 = im*R*Diagonal(Upp) - im*R*Diagonal(U)*Dy2
+    C0 = Dy4 + im*R*ω*Dy2
     L_companion = [-C3 -C2 -C1 -C0;  Id Z Z Z;  Z Id Z Z;  Z Z Id Z]
     αs, V = eigen(L_companion)
 

@@ -26,13 +26,15 @@ function solve_fs(β; ηmax=15.0, guess=1.4)
     return solution
 end
 
+# y is in units of ℓ = √(νx/U∞), with U∞ standing in for the edge velocity as in Corke & Gruber
 function build_FS_profile(y::AbstractArray; β=0.0, ηmax=20.0)
     sol  = solve_fs(β; ηmax=ηmax, guess=0.47)   # f''(0)=0.4696 for Blasius in this scaling
-    Iδ   = ηmax - sol(ηmax; idxs=1)             # δ* in η units (≈1.21678 for Blasius)
-    η    = min.(y .* Iδ, ηmax)                  # y is in δ* units
+    m    = β/(2 - β)                            # U_e ∝ x^m
+    η_y  = sqrt((m + 1)/2)                      # dη/dy, from η = y√((m+1)U∞/(2νx))
+    η    = min.(y .* η_y, ηmax)
     f    = [sol(ηi; idxs=1) for ηi in η]
     fp   = [sol(ηi; idxs=2) for ηi in η]
     fpp  = [sol(ηi; idxs=3) for ηi in η]
     fppp = -f .* fpp .- β .* (1 .- fp.^2)
-    return fp, fppp .* Iδ^2                     # U/U∞ and d²U/dy² in δ* units
+    return fp, fppp .* η_y^2, fpp .* η_y        # U/U∞, d²U/dy² and dU/dy in ℓ units
 end

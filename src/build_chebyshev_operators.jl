@@ -44,6 +44,19 @@ function build_chebyshev_operators(N,y_half,y_max)
     Dy2 = ξ_y^2*Dξ2 + ξ_yy*Dξ1
     Dy4 = ξ_y^4*Dξ4 + 6ξ_y^2*ξ_yy*Dξ3 + (3ξ_yy^2 + 4ξ_y*ξ_yyy)*Dξ2 + ξ_yyyy*Dξ1
 
+    # Dirichlet-only second derivative (f = 0 at both ends, f' free) for second-order equations
+    # such as Squire, using the standard boundary row/column removal from Trefethen Chapter 7
+    Dy2_dirichlet = ξ_y^2*D2[inner, inner] + ξ_yy*D[inner, inner]
 
-    return y, Dy1, Dy2, Dy4
+
+    return y, Dy1, Dy2, Dy4, Dy2_dirichlet
+end
+
+
+
+# inverse of the map y = a(1 + ξ)/(b − ξ) in build_chebyshev_operators, keep the two in step
+function y_to_ξ(y,y_half,y_max)
+    a = y_half*y_max/(y_max - 2y_half)
+    b = 1 + 2a/y_max
+    return (b .* y .- a) ./ (y .+ a)
 end
